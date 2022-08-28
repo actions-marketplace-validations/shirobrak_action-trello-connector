@@ -1,5 +1,10 @@
 # GitHub Action: Action-Trello-Connector
 
+[![Docker Image CI](https://github.com/shirobrak/action-trello-connector/actions/workflows/dockerimage.yaml/badge.svg)](https://github.com/shirobrak/action-trello-connector/actions/workflows/dockerimage.yaml)
+[![depup](https://github.com/shirobrak/action-trello-connector/actions/workflows/depup.yaml/badge.svg)](https://github.com/shirobrak/action-trello-connector/actions/workflows/depup.yaml)
+[![release](https://github.com/shirobrak/action-trello-connector/actions/workflows/release.yaml/badge.svg)](https://github.com/shirobrak/action-trello-connector/actions/workflows/release.yaml)
+[![action-bumpr supported](https://img.shields.io/badge/bumpr-supported-ff69b4?logo=github&link=https://github.com/haya14busa/action-bumpr)](https://github.com/haya14busa/action-bumpr)
+
 This action provides the integration between GitHub and [Trello](https://trello.com/). <br/>
 It is triggered by a Pull Request or Push event and attaches PR and branch information to a Trello Card as an attachment.
 
