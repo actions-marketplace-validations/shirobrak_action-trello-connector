@@ -1,0 +1,4 @@
+.vscode
+.env
+.envrc
+app/target
