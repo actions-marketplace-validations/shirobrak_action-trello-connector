@@ -54,7 +54,7 @@ jobs:
         uses: shirobrak/action-trello-connector@v1.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          trello_key: ${{ secrets.TRELLO_KEY }}
-          trello_token: ${{ secrets.TRELLO_TOKEN }}
+          trello_api_key: ${{ secrets.TRELLO_KEY }}
+          trello_api_token: ${{ secrets.TRELLO_TOKEN }}
           trello_board_id: ${{ secrets.TRELLO_BOARD_ID }}
 ```
