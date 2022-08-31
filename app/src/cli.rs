@@ -20,6 +20,9 @@ struct Args {
     gh_repository_name: String,
 
     #[clap(long, value_parser)]
+    gh_pr_num: Option<String>,
+
+    #[clap(long, value_parser)]
     gh_pr_url: Option<String>,
 
     #[clap(long, value_parser)]
@@ -44,6 +47,7 @@ impl CLI {
             t_board_id: args.trello_board_id,
             gh_event_name: args.gh_event_name,
             gh_repository_name: args.gh_repository_name,
+            gh_pr_num: args.gh_pr_num,
             gh_pr_url: args.gh_pr_url,
             gh_pr_title: args.gh_pr_title,
             gh_pr_body: args.gh_pr_body,
