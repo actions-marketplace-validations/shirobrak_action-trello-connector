@@ -2,7 +2,7 @@ use regex::Regex;
 use std::collections::HashSet;
 use std::error::Error;
 
-use crate::usecase::interface::TrelloApiGateway;
+use crate::usecase::interface::{GitHubApiGateway, TrelloApiGateway};
 
 fn search_trello_card_numbers(vals: Vec<String>) -> Result<HashSet<String>, Box<dyn Error>> {
     let mut tcns: HashSet<String> = HashSet::new();
@@ -21,23 +21,32 @@ fn create_branch_url(repository_name: String, branch_name: String) -> String {
 
 pub struct Usecase {
     trello_api_gw: Box<dyn TrelloApiGateway>,
+    github_api_gw: Box<dyn GitHubApiGateway>,
 }
 
 impl Usecase {
-    pub fn new(trello_api_gw: Box<dyn TrelloApiGateway>) -> Usecase {
-        return Usecase { trello_api_gw };
+    pub fn new(
+        trello_api_gw: Box<dyn TrelloApiGateway>,
+        github_api_gw: Box<dyn GitHubApiGateway>,
+    ) -> Usecase {
+        return Usecase {
+            trello_api_gw,
+            github_api_gw,
+        };
     }
 
     pub fn run(
         &self,
         board_id: String,
         gh_repository_name: String,
+        gh_pr_num: String,
         gh_pr_url: String,
         gh_branch_name: String,
         gh_pr_title: String,
         gh_pr_body: String,
     ) -> Result<(), Box<dyn Error>> {
-        let gh_branch_url = create_branch_url(gh_repository_name, gh_branch_name.to_string());
+        let gh_branch_url =
+            create_branch_url(gh_repository_name.to_string(), gh_branch_name.to_string());
         let tcns = search_trello_card_numbers(vec![
             gh_pr_title.to_string(),
             gh_pr_body.to_string(),
@@ -76,6 +85,15 @@ impl Usecase {
                 if a.url == gh_branch_url && target_urls.contains(&gh_branch_url) {
                     target_urls.remove(&gh_branch_url);
                 }
+            }
+
+            if target_urls.len() > 0 {
+                // don't post comment to PR if already attach link to card.
+                let _ = self.github_api_gw.attach_trello_link_to_pr(
+                    gh_repository_name.to_string(),
+                    gh_pr_num.to_string(),
+                    card.short_url.to_string(),
+                );
             }
 
             for target_url in target_urls {

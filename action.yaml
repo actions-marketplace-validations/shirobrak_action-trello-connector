@@ -2,6 +2,10 @@ name: 'Action Trello Connector'
 description: 'Connect PR and Trello cards to improve development experience.'
 author: 'shirobrak'
 inputs:
+  github_token:
+    description: 'GITHUB_TOKEN.'
+    required: true
+    default: ${{ github.token }}
   trello_api_key:
     description: "Trello API Key."
     required: true
@@ -22,6 +26,10 @@ inputs:
     description: ""
     required: false
     default: ${{ github.repository }}
+  GH_PR_NUM:
+    description: ""
+    required: false
+    default: ${{ github.event.number }}
   GH_PR_URL:
     description: ""
     required: false
@@ -51,8 +59,10 @@ runs:
     TRELLO_KEY: ${{ inputs.trello_api_key }}
     TRELLO_TOKEN: ${{ inputs.trello_api_token }}
     TRELLO_BOARD_ID: ${{ inputs.trello_board_id }}
+    GITHUB_TOKEN: ${{ inputs.github_token }}
     GH_EVENT_NAME: ${{ inputs.gh_event_name }}
     GH_REPOSITORY_NAME: ${{ inputs.gh_repository_name }}
+    GH_PR_NUM: ${{ inputs.gh_pr_num }}
     GH_PR_URL: ${{ inputs.gh_pr_url }}
     GH_PR_TITLE: ${{ inputs.gh_pr_title }}
     GH_PR_BODY: ${{ inputs.gh_pr_body }}

@@ -6,8 +6,10 @@ use serde::{Deserialize, Serialize};
 use crate::usecase::interface::TrelloApiGateway;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct Card {
     pub id: String,
+    pub short_url: String,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

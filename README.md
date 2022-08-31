@@ -19,6 +19,10 @@ The following features are provided when the PR title, PR body, or branch name c
 
 ## Inputs
 
+### `github_token`
+
+**Required**. Default is `${{ github.token }}`.
+
 ### `trello_api_key`
 
 **Required.**
@@ -49,7 +53,8 @@ jobs:
       - name: action-trello-connector
         uses: shirobrak/action-trello-connector@v1.0.0
         with:
-          trello_key: ${{ secrets.TRELLO_KEY }}
-          trello_token: ${{ secrets.TRELLO_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          trello_api_key: ${{ secrets.TRELLO_KEY }}
+          trello_api_token: ${{ secrets.TRELLO_TOKEN }}
           trello_board_id: ${{ secrets.TRELLO_BOARD_ID }}
 ```
