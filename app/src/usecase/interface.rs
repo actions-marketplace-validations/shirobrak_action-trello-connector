@@ -1,6 +1,15 @@
 use crate::gateway::trello_api::{Attachment, Card};
 use std::error::Error;
 
+pub trait GitHubApiGateway {
+    fn attach_trello_link_to_pr(
+        &self,
+        repository_name: String,
+        pr_num: String,
+        card_url: String,
+    ) -> Result<(), Box<dyn Error>>;
+}
+
 pub trait TrelloApiGateway {
     fn find_card_by_card_num(
         &self,
