@@ -5,6 +5,7 @@ cd /app
 ./action-trello-connector --version
 
 ./action-trello-connector --trello-board-id "$TRELLO_BOARD_ID" \
+  --prefix-word "$PREFIX_WORD" \
   --gh-event-name "$GH_EVENT_NAME" \
   --gh-repository-name "$GH_REPOSITORY_NAME" \
   --gh-pr-num "$GH_PR_NUM" \

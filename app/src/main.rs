@@ -16,6 +16,7 @@ struct Envs {
 #[derive(Debug)]
 pub struct Params {
     t_board_id: String,
+    prefix_word: String,
     gh_event_name: String,
     gh_repository_name: String,
     gh_pr_num: Option<String>,
@@ -62,6 +63,7 @@ fn main() {
             .expect("`gh_pr_body` is required param, when pr event");
         let _ = usecase.run(
             params.t_board_id,
+            params.prefix_word,
             params.gh_repository_name,
             gh_pr_num,
             gh_pr_url,
@@ -75,6 +77,11 @@ fn main() {
         let gh_branch_name = params
             .gh_push_branch_name
             .expect("`gh_pr_branch_name` is required param, when pr event");
-        let _ = usecase.run(params.t_board_id, params.gh_repository_name, gh_branch_name);
+        let _ = usecase.run(
+            params.t_board_id,
+            params.prefix_word,
+            params.gh_repository_name,
+            gh_branch_name,
+        );
     }
 }

@@ -18,6 +18,10 @@ inputs:
     description: "Target Trello board ID"
     required: true
     default: ""
+  prefix_word:
+    description: "prefix word to identify Trello card number"
+    required: false
+    default: "#tcn"
   GH_EVENT_NAME:
     description: ""
     required: false
@@ -60,6 +64,7 @@ runs:
     TRELLO_TOKEN: ${{ inputs.trello_api_token }}
     TRELLO_BOARD_ID: ${{ inputs.trello_board_id }}
     GITHUB_TOKEN: ${{ inputs.github_token }}
+    PREFIX_WORD: ${{ inputs.prefix_word }}
     GH_EVENT_NAME: ${{ inputs.gh_event_name }}
     GH_REPOSITORY_NAME: ${{ inputs.gh_repository_name }}
     GH_PR_NUM: ${{ inputs.gh_pr_num }}

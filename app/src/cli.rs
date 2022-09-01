@@ -13,6 +13,9 @@ struct Args {
     #[clap(long, value_parser)]
     trello_board_id: String,
 
+    #[clap(long, value_parser, default_value = "#tcn")]
+    prefix_word: String,
+
     #[clap(long, value_parser)]
     gh_event_name: String,
 
@@ -45,6 +48,7 @@ impl CLI {
         let args = Args::parse();
         return Params {
             t_board_id: args.trello_board_id,
+            prefix_word: args.prefix_word,
             gh_event_name: args.gh_event_name,
             gh_repository_name: args.gh_repository_name,
             gh_pr_num: args.gh_pr_num,

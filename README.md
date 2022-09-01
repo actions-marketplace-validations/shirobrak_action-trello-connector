@@ -35,6 +35,13 @@ The following features are provided when the PR title, PR body, or branch name c
 
 **Required.**
 
+### `prefix_word`
+
+**Required**. Default is `#tcn`.
+The following expressions are permitted in the prefix.
+
+`r"^[a-zA-Z\-#]+$""`
+
 ## How to get Trello API key and token
 
 Please refer to the following links for the necessary information on using Trello's API.
@@ -57,4 +64,5 @@ jobs:
           trello_api_key: ${{ secrets.TRELLO_KEY }}
           trello_api_token: ${{ secrets.TRELLO_TOKEN }}
           trello_board_id: ${{ secrets.TRELLO_BOARD_ID }}
+          prefix_word: "#tcn"
 ```
