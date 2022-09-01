@@ -4,9 +4,18 @@ use std::error::Error;
 
 use crate::usecase::interface::{GitHubApiGateway, TrelloApiGateway};
 
-fn search_trello_card_numbers(vals: Vec<String>) -> Result<HashSet<String>, Box<dyn Error>> {
+fn is_valid_prefix_word(prefix_word: String) -> bool {
+    let re = Regex::new(r"^[a-zA-Z\-#]+$").unwrap();
+    return re.is_match(&prefix_word);
+}
+
+fn search_trello_card_numbers(
+    prefix_word: String,
+    vals: Vec<String>,
+) -> Result<HashSet<String>, Box<dyn Error>> {
     let mut tcns: HashSet<String> = HashSet::new();
-    let search_re = Regex::new(r"#tcn([0-9]+)").unwrap();
+    let re = format!("{}([0-9]+)", prefix_word);
+    let search_re = Regex::new(&re).unwrap();
     for val in vals {
         for cap in search_re.captures_iter(&val) {
             tcns.insert(String::from(&cap[1]));
@@ -38,6 +47,7 @@ impl Usecase {
     pub fn run(
         &self,
         board_id: String,
+        prefix_word: String,
         gh_repository_name: String,
         gh_pr_num: String,
         gh_pr_url: String,
@@ -45,13 +55,20 @@ impl Usecase {
         gh_pr_title: String,
         gh_pr_body: String,
     ) -> Result<(), Box<dyn Error>> {
+        if !is_valid_prefix_word(prefix_word.to_string()) {
+            println!("invalid prefix word");
+            return Ok(());
+        }
         let gh_branch_url =
             create_branch_url(gh_repository_name.to_string(), gh_branch_name.to_string());
-        let tcns = search_trello_card_numbers(vec![
-            gh_pr_title.to_string(),
-            gh_pr_body.to_string(),
-            gh_branch_name.to_string(),
-        ])
+        let tcns = search_trello_card_numbers(
+            prefix_word,
+            vec![
+                gh_pr_title.to_string(),
+                gh_pr_body.to_string(),
+                gh_branch_name.to_string(),
+            ],
+        )
         .unwrap();
         if tcns.is_empty() {
             println!("not found trello card numbers.");

@@ -12,3 +12,4 @@ jobs:
           trello_api_key: ${{ secrets.TRELLO_KEY }}
           trello_api_token: ${{ secrets.TRELLO_TOKEN }}
           trello_board_id: ${{ secrets.TRELLO_BOARD_ID }}
+          prefix_word: "#tcn"
